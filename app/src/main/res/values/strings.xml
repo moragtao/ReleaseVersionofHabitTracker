@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">HabitTracker</string>
+    <string name="Cancel">Отмена</string>
+    <string name="Status">Статус</string>
+    <string name="Done">Сделано</string>
+    <string name="Skip">Пропустить</string>
+    <string name="Delete">Удалить</string>
+    <string-array name="Cats">
+        <item>Учёба</item>
+        <item>Работа</item>
+        <item>Саморазвитие</item>
+    </string-array>
+</resources>
