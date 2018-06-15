@@ -18,10 +18,23 @@ import java.util.*
 
 public class HabitTable() : AppCompatActivity(){
 
+    var context = this
     var days = 30
+    var db = DataBaseHandler(context)
+    var hbdt : MutableList<String> = mutableListOf()
     var habits = 3
     var flag = false
 
+    fun UpdateList(){
+        var i : Int = 0
+        hbdt.clear()
+        var hbd = db.readData()
+        while(i <= hbd.lastIndex) {
+            if(hbd[i].Hname.isNotEmpty())
+                hbdt.add(hbd[i].Hname)
+            i++
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +54,8 @@ public class HabitTable() : AppCompatActivity(){
                 scroll_list.scrollY = scrollY
             }
         }
+
+        //month()
 
         choose_date()
         list_habits()
@@ -98,9 +113,9 @@ public class HabitTable() : AppCompatActivity(){
         {
 
             if (flag == true)
-                arr[0][0].setBackgroundResource(R.drawable.element_green)
+                arr[0][1].setBackgroundResource(R.drawable.element_green)
             else
-                arr[0][0].setBackgroundResource(R.drawable.element_red)
+                arr[0][1].setBackgroundResource(R.drawable.element_red)
 
             gridview.invalidate();
         }
@@ -123,20 +138,19 @@ public class HabitTable() : AppCompatActivity(){
 
     }
 
-
-    /*fun month()
+    /*
+    fun month()
     {
 
         var month : String = ""
 
-        spinner_month.setOnItem { parent, view, position, id ->
-            month = spinner.selectedItem.toString()
+        spinner_month.setOnItemClickListener { parent, view, position, id ->
+            month = spinner_month.selectedItem.toString()
         }
-
         var year : String = ""
 
         spinner_year.setOnItemClickListener { parent, view, position, id ->
-            year = spinner.selectedItem.toString()
+            year = spinner_year.selectedItem.toString()
         }
 
 
@@ -156,6 +170,7 @@ public class HabitTable() : AppCompatActivity(){
 
         }
 
+        gridview.invalidate();
     }
 
 }

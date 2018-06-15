@@ -22,7 +22,7 @@ class Settings : AppCompatActivity(){
     val adapter by lazy {makeAdapter(dat)}
     //var DB = MySqlHelper1.getInstance(this)
 
-    fun UpdateList(){
+    /*fun UpdateList(){
         var i : Int = 0
         dat.clear()
         var ctg = db.ReadData()
@@ -32,7 +32,7 @@ class Settings : AppCompatActivity(){
             i++
         }
         adapter.notifyDataSetChanged()
-    }
+    }*/
 
     fun CatSelected(position : Int){
         var ctg = db.ReadData()
@@ -44,6 +44,10 @@ class Settings : AppCompatActivity(){
                 })
                 .setPositiveButton("Удалить",{
                     dialog, _ ->
+                    db.DeleteSelected(dat[position])
+                    //UpdateList()
+                    adapter.notifyDataSetChanged()
+                    dialog.cancel()
                 })
     }
 
@@ -53,9 +57,11 @@ class Settings : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
+        var labels = db.ReadData()
+        //var adapter = ArrayAdapter<String>(this, R.layout.my_listlabels_item, labels)
         labelslist.adapter = adapter
 
-        UpdateList()
+        //UpdateList()
 
         addlabel.setOnClickListener {
             var cat = Cat(edittext.text.toString())

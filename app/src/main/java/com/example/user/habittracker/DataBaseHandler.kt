@@ -92,17 +92,6 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
     fun DeleteSelected(name : String){
         val db = this.writableDatabase
         db.delete(TABLE_NAME,"name LIKE ?", arrayOf(name))
-
-//        val query = "Select * from " + TABLE_NAME
-//        val result = db.rawQuery(query,null)
-//
-//        if(result.moveToFirst()){
-//            do{
-//                println(result.getColumnIndex(COL_HNAME))
-//                println(result.getColumnIndex(COL_ID))
-//            }while(result.moveToNext())
-//        }
-
         db.close()
     }
 

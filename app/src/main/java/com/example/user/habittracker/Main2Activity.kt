@@ -23,9 +23,11 @@ class Main2Activity : AppCompatActivity() {
     val ADD_TASK_REQUEST = 1
     var hour : Int = 8
     var min : Int = 0
+    val cb = CatBaseHandler(context)
     companion object {
         val EXTRA_TASK_DESCRIPTION = "task"
     }
+    var spindat : MutableList<String> = mutableListOf("Учеба","Работа","Саморазвитие")
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -47,10 +49,24 @@ class Main2Activity : AppCompatActivity() {
         }
     }
 
-
+    var dat = mutableListOf<String>()
+    fun UpdateList(){
+        var i : Int = 0
+        dat.clear()
+        var cbd = cb.ReadData()
+        while(i <= cbd.lastIndex) {
+            println("First huh?")
+            if(cbd[i].name.isNotEmpty())
+                dat.add(cbd[i].name)
+            i++
+            println("Huh what ${i}")
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
+
+        UpdateList()
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 

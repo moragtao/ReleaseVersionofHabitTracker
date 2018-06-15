@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_main_page.*
 import android.app.PendingIntent
 import android.media.RingtoneManager
 import android.app.NotificationManager
+import kotlinx.android.synthetic.main.activity_main2.*
 import java.util.*
 
 
@@ -95,7 +96,7 @@ class MainPage : AppCompatActivity() {
                 .create()
                 .show()
     }
-// Initial commit
+
     fun showNotification() {
     val builder = NotificationCompat.Builder(this)
             .setSmallIcon(R.mipmap.ic_launcher)
@@ -117,7 +118,7 @@ class MainPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
 
-        statistic.imageAlpha = R.mipmap.settings_icon
+        //statistic.imageAlpha = R.mipmap.settings_icon
         habitlist.adapter = adapter
 
         UpdateList()
@@ -133,7 +134,8 @@ class MainPage : AppCompatActivity() {
         }
 
         setts.setOnClickListener {
-
+            val tosetts = Intent(this,Settings::class.java)
+            startActivity(tosetts)
         }
 
         habitlist.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
