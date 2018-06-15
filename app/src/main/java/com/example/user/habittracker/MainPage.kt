@@ -87,8 +87,7 @@ class MainPage : AppCompatActivity() {
                 .setNeutralButton(R.string.Delete,
                         {
                             dialog, _ ->
-                            dat.removeAt(position)
-                            db.deleteDataById(position)
+                            db.DeleteSelected(dat[position])
                             UpdateList()
                             adapter.notifyDataSetChanged()
                             dialog.cancel()
@@ -131,6 +130,10 @@ class MainPage : AppCompatActivity() {
             db.deleteDataAll()
             dat.clear()
             adapter.notifyDataSetChanged()
+        }
+
+        setts.setOnClickListener {
+
         }
 
         habitlist.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->

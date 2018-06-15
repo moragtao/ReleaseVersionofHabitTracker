@@ -7,19 +7,72 @@ import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import android.support.v7.app.AlertDialog
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main_page.*
 import kotlinx.android.synthetic.main.activity_settings.*
 //import org.jetbrains.anko.db.classParser
 
 class Settings : AppCompatActivity(){
 
+    val context = this
+    var db = CatBaseHandler(context)
+    var dat : MutableList<String> = mutableListOf()
+    val adapter by lazy {makeAdapter(dat)}
     //var DB = MySqlHelper1.getInstance(this)
+
+    fun UpdateList(){
+        var i : Int = 0
+        dat.clear()
+        var ctg = db.ReadData()
+        while(i <= ctg.lastIndex) {
+            if(ctg[i].name.isNotEmpty())
+                dat.add(ctg[i].name)
+            i++
+        }
+        adapter.notifyDataSetChanged()
+    }
+
+    fun CatSelected(position : Int){
+        var ctg = db.ReadData()
+        AlertDialog.Builder(this)
+                .setTitle("Категория привычек")
+                .setMessage(ctg[position].name)
+                .setNegativeButton("Отмена",{
+                    dialog, _ -> dialog.cancel()
+                })
+                .setPositiveButton("Удалить",{
+                    dialog, _ ->
+                })
+    }
+
+    fun makeAdapter(list: List<String>): ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-/*
+
+        labelslist.adapter = adapter
+
+        UpdateList()
+
+        addlabel.setOnClickListener {
+            var cat = Cat(edittext.text.toString())
+            var db = CatBaseHandler(context)
+            db.InsertData(cat)
+            edittext.setText("")
+            dat.add(cat.name)
+        }
+
+        save.setOnClickListener {
+            finish()
+        }
+
+        labelslist.onItemClickListener = AdapterView.OnItemClickListener{ parent, view, position, id ->
+            CatSelected(position)
+        }
+        /*
         var num = 0
 
         var labels = DB.SelectLabel(this)

@@ -21,6 +21,7 @@ val COL_HTIMEHOUR = "timeHour"
 val COL_HTIMEMIN = "timeMin"
 val COL_HVIBRATE = "vibrate"
 
+
 class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,null,1){
     override fun onCreate(db: SQLiteDatabase?) {
 
@@ -88,9 +89,24 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         db.close()
     }
 
-    fun deleteDataById(pos: Int){
-        var db = this.writableDatabase
-        db.delete(TABLE_NAME,COL_ID,arrayOf(1.toString()))
+    fun DeleteSelected(name : String){
+        val db = this.writableDatabase
+        db.delete(TABLE_NAME,"name LIKE ?", arrayOf(name))
+
+//        val query = "Select * from " + TABLE_NAME
+//        val result = db.rawQuery(query,null)
+//
+//        if(result.moveToFirst()){
+//            do{
+//                println(result.getColumnIndex(COL_HNAME))
+//                println(result.getColumnIndex(COL_ID))
+//            }while(result.moveToNext())
+//        }
+
         db.close()
     }
+
+
 }
+
+
